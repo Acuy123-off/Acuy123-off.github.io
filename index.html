@@ -4,98 +4,167 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Acuy123 | Dashboard</title>
-<link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
   <div class="container">
     <header>
       <h1>Acuy123 Dashboard</h1>
-      <p class="subtitle">My Stuff</p>
+      
+      <nav class="nav-bar">
+        <a href="#projects">Projects</a>
+        <a href="#community">Community Posts</a>
+      </nav>
     </header>
 
-    <main class="grid">
+    <section id="projects">
+      <main class="grid">
 
-
-      <div class="card">
-        <img src="img/github.png" alt="Github Preview" class="card-thumb" />
-        <div class="card-content">
-          <div>
-            <h2 class="card-title">Github</h2>
-            <p class="card-desc">My Github.</p>
+        <div class="card">
+          <img src="img/github.png" alt="Github Preview" class="card-thumb" />
+          <div class="card-content">
+            <div>
+              <h2 class="card-title">Github</h2>
+              <p class="card-desc">My Github.</p>
+            </div>
+            <a href="https://github.com/Acuy123-off" class="btn" target="_blank">Click Here!</a>
           </div>
-          <a href="https://github.com/Acuy123-off" class="btn" target="_blank">Click Here!</a>
         </div>
+
+        <div class="card">
+          <img src="img/explore.png" alt="Acuy123-Creations Preview" class="card-thumb" />
+          <div class="card-content">
+            <div>
+              <h2 class="card-title">Acuy123 Creations</h2>
+              <p class="card-desc">All of my Creation about stories, sleep journal, Original Character.</p>
+            </div>
+            <a href="https://acuy123-off.github.io/Acuy123-Creations/" class="btn" target="_blank">Click Here!</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="img/dor.png" alt="Nembak Preview" class="card-thumb" />
+          <div class="card-content">
+            <div>
+              <h2 class="card-title">Nembak</h2>
+              <p class="card-desc">A Shooter game. Made for homework. ( Work on PC only )</p>
+            </div>
+            <a href="https://acuy123-off.github.io/Nembak/" class="btn" target="_blank">Click Here!</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="img/smea.png" alt="Smea Preview" class="card-thumb" />
+          <div class="card-content">
+            <div>
+              <h2 class="card-title">Sejarah SMEA</h2>
+              <p class="card-desc">The history of SMEA. ( its bugged in mobile so open it on PC for better view/UI ) </p>
+            </div>
+            <a href="https://sejarahsmkn2smi.blogspot.com/" class="btn" target="_blank">Click Here!</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="img/youtube.png" alt="Youtube Preview" class="card-thumb" />
+          <div class="card-content">
+            <div>
+              <h2 class="card-title">Youtube</h2>
+              <p class="card-desc">My Channel.</p>
+            </div>
+            <a href="https://youtube.com/@acuy123?si=9u3cGKSkgrWoQ6gE" class="btn" target="_blank">Click Here!</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="img/hu.png" alt="Hoki-Udara Preview" class="card-thumb" />
+          <div class="card-content">
+            <div>
+              <h2 class="card-title">Hoki Udara</h2>
+              <p class="card-desc">My Mobile/Android game ( Not gonna Update it )</p>
+            </div>
+            <a href="https://acuy123.itch.io/hoki-udara" class="btn" target="_blank">Click Here!</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="img/wttd.png" alt="WTTD Preview" class="card-thumb" />
+          <div class="card-content">
+            <div>
+              <h2 class="card-title">Walking To The Death ( DEMO )</h2>
+              <p class="card-desc">WTTD is a adventure, point - click games</p>
+            </div>
+            <a href="https://acuy123-off.github.io/WTTD-Demo/" class="btn" target="_blank">Click Here!</a>
+          </div>
+        </div>
+
+      </main>
+    </section>
+
+    <section id="community">
+      <h2 class="section-banner">Community Posts</h2>
+
+        <!-- Admin Post Box -->
+      <div class="post-card" style="max-width: 650px; margin: 0 auto 1.5rem auto;">
+        <h3 style="color: var(--heading); margin-top:0;">New Post</h3>
+        <textarea id="post-input" placeholder="What's on your mind?" style="width: 100%; height: 80px; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 6px; padding: 0.5rem; box-sizing: border-box;"></textarea>
+        <input type="text" id="image-input" placeholder="Image URL (optional)" style="width: 100%; margin-top: 0.5rem; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 6px; padding: 0.5rem; box-sizing: border-box;" />
+        <button id="submit-post-btn" class="btn" style="margin-top: 0.5rem; cursor: pointer;">Publish!</button>
       </div>
 
-      <div class="card">
-        <img src="img/explore.png" alt="Acuy123-Creations Preview" class="card-thumb" />
-        <div class="card-content">
-          <div>
-            <h2 class="card-title">Acuy123 Creations</h2>
-            <p class="card-desc">All of my Creation about stories, sleep journal, Original Character.</p>
-          </div>
-          <a href="https://acuy123-off.github.io/Acuy123-Creations/" class="btn" target="_blank">Click Here!</a>
-        </div>
-      </div>
+  <div id="feed-container" class="feed-container">
+    <p style="text-align: center;">Loading posts...</p>
+  </div>
+      <!-- <h2 class="section-banner">Community Posts</h2>
 
-      <div class="card">
-        <img src="img/dor.png" alt="Nembak Preview" class="card-thumb" />
-        <div class="card-content">
-          <div>
-            <h2 class="card-title">Nembak</h2>
-            <p class="card-desc">A Shooter game. Made for homework. ( Work on PC only )</p>
+      <div class="feed-container">
+        
+        <article class="post-card">
+          <div class="post-header">
+            <img src="img/ditto.png" alt="Acuy123" class="post-avatar" />
+            <div class="post-user-info">
+              <span class="post-author">Acuy123</span>
+              <span class="post-date" data-timestamp="2026-08-26T23:15:00">Loading time...</span>
+            </div>
           </div>
-          <a href="https://acuy123-off.github.io/Nembak/" class="btn" target="_blank">Click Here!</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="img/smea.png" alt="Smea Preview" class="card-thumb" />
-        <div class="card-content">
-          <div>
-            <h2 class="card-title">Sejarah SMEA</h2>
-            <p class="card-desc">The history of SMEA. ( its bugged in mobile so open it on PC for better view/UI ) </p>
+          <div class="post-body">
+            <p>Hello, this is a Test :)</p>
           </div>
-          <a href="https://sejarahsmkn2smi.blogspot.com/" class="btn" target="_blank">Click Here!</a>
-        </div>
-      </div>
+        </article>
 
-      <div class="card">
-        <img src="img/youtube.png" alt="Youtube Preview" class="card-thumb" />
-        <div class="card-content">
-          <div>
-            <h2 class="card-title">Youtube</h2>
-            <p class="card-desc">My Channel.</p>
+        <article class="post-card">
+          <div class="post-header">
+            <img src="img/ditto.png" alt="Acuy123" class="post-avatar" />
+            <div class="post-user-info">
+              <span class="post-author">Acuy123</span>
+              <span class="post-date" data-timestamp="2026-08-26T23:59:00">Loading time...</span>
+            </div>
           </div>
-          <a href="https://youtube.com/@acuy123?si=9u3cGKSkgrWoQ6gE" class="btn" target="_blank">Click Here!</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <img src="img/hu.png" alt="Hoki-Udara Preview" class="card-thumb" />
-        <div class="card-content">
-          <div>
-            <h2 class="card-title">Hoki Udara</h2>
-            <p class="card-desc">My Mobile/Android game ( Not gonna Update it )</p>
+          <div class="post-body">
+            <p>Testing if the image show in here or not. 😀</p>
+            <img src="img/vs.png" alt="Post Image Preview" class="post-image" />
           </div>
-          <a href="https://acuy123.itch.io/hoki-udara" class="btn" target="_blank">Click Here!</a>
-        </div>
-      </div>
+        </article>
 
-      <div class="card">
-        <img src="img/wttd.png" alt="WTTD Preview" class="card-thumb" />
-        <div class="card-content">
-          <div>
-            <h2 class="card-title">Walking To The Death ( DEMO )</h2>
-            <p class="card-desc">WTTD is a adventure, point - click games</p>
+        <article class="post-card">
+          <div class="post-header">
+            <img src="img/ditto.png" alt="Acuy123" class="post-avatar" />
+            <div class="post-user-info">
+              <span class="post-author">Acuy123</span>
+              <span class="post-date" data-timestamp="2026-08-27T00:20:00">Loading time...</span>
+            </div>
           </div>
-          <a href="https://acuy123-off.github.io/WTTD-Demo/" class="btn" target="_blank">Click Here!</a>
-        </div>
-      </div>
+          <div class="post-body">
+            <p>OK, I think its work. hehe.</p>
+          </div> -->
+        </article>
 
-    </main>
+      </div>
+    </section>
+
   </div>
 
 </body>
+<script src="script.js"></script>
 </html>
