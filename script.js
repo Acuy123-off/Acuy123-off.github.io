@@ -4,6 +4,7 @@ const SUPABASE_KEY = 'sb_publishable_COutYhokKw6asipcSX1XTg_2QSMochC';
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ADMIN SECURITY CHECK:
+const urlParams = new URLSearchParams(window.location.search);
 const isAdmin = urlParams.get('admin') === 'true' || localStorage.getItem('isAdmin') === 'true';
 
 if (isAdmin) {
