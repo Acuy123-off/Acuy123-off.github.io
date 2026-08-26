@@ -4,8 +4,8 @@
       --border: #334155;
       --text: #94a3b8;
       --heading: #f8fafc;
-      --accent: #38bdf8;
-      --accent-hover: #0284c7;
+      --accent: #38f855;
+      --accent-hover: #02c719;
     }
 
     body {
@@ -14,6 +14,11 @@
       color: var(--text);
       margin: 0;
       padding: 2rem 1rem;
+      background-image: url("img/lang.png");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
     }
 
     header {
@@ -25,11 +30,14 @@
       color: var(--heading);
       font-size: 2.2rem;
       margin-bottom: 0.5rem;
+      color: limegreen;
+      background-color: black;
     }
 
     .subtitle {
       font-size: 1rem;
       color: var(--accent);
+      background-color: black;
     }
 
     .container {
