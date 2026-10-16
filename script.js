@@ -11,6 +11,9 @@ if (isAdmin) {
   localStorage.setItem('isAdmin', 'true'); // Save admin access in local browser storage
   const adminBox = document.getElementById('admin-post-box');
   if (adminBox) adminBox.style.display = 'block';
+
+  const adminTodoBox = document.getElementById('admin-todo-box');
+  if (adminTodoBox) adminTodoBox.style.display = 'block';
 }
 
 // READ: Fetch all posts ordered by newest first
@@ -147,3 +150,125 @@ supabaseClient
 // Run initial load & start timestamp interval
 loadPosts();
 setInterval(updatePostDates, 1000);
+
+
+//   TO-DO LIST
+
+// READ: Ambil semua data To-Do
+async function loadTodos() {
+  const container = document.getElementById('todo-container');
+
+  const { data: todos, error } = await supabaseClient
+    .from('todos')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error(error);
+    container.innerHTML = '<p style="text-align:center;">Error loading to-do list.</p>';
+    return;
+  }
+
+  if (!todos || todos.length === 0) {
+    container.innerHTML = '<p style="text-align:center;">No tasks yet. You are all caught up!</p>';
+    return;
+  }
+
+  container.innerHTML = todos.map(todo => {
+    // Tentukan warna class dan teks berdasarkan status dari database
+    let statusClass = 'status-todo';
+    let statusText = 'To-Do';
+    if (todo.status === 'progress') {
+      statusClass = 'status-progress';
+      statusText = 'In Progress';
+    } else if (todo.status === 'done') {
+      statusClass = 'status-done';
+      statusText = 'Done';
+    }
+
+    // Tampilan tombol khusus admin untuk edit status dan delete
+    const adminControls = isAdmin ? `
+      <div style="margin-top: 15px; display: flex; gap: 10px; align-items: center;">
+        <select onchange="updateTodoStatus(${todo.id}, this.value)" style="background: #1e293b; color: white; border: 1px solid #334155; border-radius: 4px; padding: 0.3rem;">
+          <option value="todo" ${todo.status === 'todo' ? 'selected' : ''}>To-Do</option>
+          <option value="progress" ${todo.status === 'progress' ? 'selected' : ''}>In Progress</option>
+          <option value="done" ${todo.status === 'done' ? 'selected' : ''}>Done</option>
+        </select>
+        <button onclick="deleteTodo(${todo.id})" style="background:none; border:none; color:#ef4444; cursor:pointer;" title="Delete Task">🗑️ Delete</button>
+      </div>
+    ` : '';
+
+    return `
+      <div class="post-card todo-item">
+        <div class="todo-content">
+          <h3 class="todo-title">${todo.title}</h3>
+          <p>${todo.description}</p>
+          ${adminControls}
+        </div>
+        <span class="status-label ${statusClass}">${statusText}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+// CREATE: Tambah To-Do baru
+document.getElementById('submit-todo-btn')?.addEventListener('click', async () => {
+  const titleInput = document.getElementById('todo-title-input');
+  const descInput = document.getElementById('todo-desc-input');
+  const statusInput = document.getElementById('todo-status-input');
+
+  if (!titleInput.value.trim()) return alert('Task Title is required!');
+
+  const { error } = await supabaseClient.from('todos').insert([
+    {
+      title: titleInput.value,
+      description: descInput.value,
+      status: statusInput.value
+    }
+  ]);
+
+  if (error) {
+    console.error('Error adding task:', error);
+    alert('Failed to add task. Check RLS policies!');
+  } else {
+    titleInput.value = '';
+    descInput.value = '';
+    statusInput.value = 'todo';
+    loadTodos(); 
+  }
+});
+
+// UPDATE: Ganti status To-Do (Dipanggil lewat dropdown)
+async function updateTodoStatus(id, newStatus) {
+  const { error } = await supabaseClient
+    .from('todos')
+    .update({ status: newStatus })
+    .eq('id', id);
+
+  if (error) {
+    console.error('Error updating status:', error);
+  } else {
+    loadTodos();
+  }
+}
+
+// DELETE: Hapus To-Do
+async function deleteTodo(id) {
+  if (!confirm('Are you sure you want to delete this task?')) return;
+
+  const { error } = await supabaseClient.from('todos').delete().eq('id', id);
+  if (error) {
+    console.error('Error deleting task:', error);
+  } else {
+    loadTodos();
+  }
+}
+
+// REALTIME LOBBY SYNC: Auto-update saat ada data yang berubah di tabel 'todos'
+supabaseClient
+  .channel('public:todos')
+  .on('postgres_changes', { event: '*', schema: 'public', table: 'todos' }, loadTodos)
+  .subscribe();
+
+// Panggil fungsi saat pertama kali halaman dimuat
+loadTodos();

@@ -16,6 +16,7 @@
       <nav class="nav-bar">
         <a href="#projects">Projects</a>
         <a href="#community">Community Posts</a>
+        <a href="#todo">To-Do List</a>
       </nav>
     </header>
 
@@ -182,6 +183,27 @@
           </div> -->
         </article>
 
+    <section id="todo">
+      <h2 class="section-banner">My To-Do List</h2>
+
+      <!-- Kotak Input To-Do (Hanya muncul jika Admin) -->
+      <div id="admin-todo-box" class="post-card" style="display: none; max-width: 650px; margin: 0 auto 1.5rem auto;">
+        <h3 style="color: var(--heading); margin-top:0;">Add New Task</h3>
+        <input type="text" id="todo-title-input" placeholder="Task Title" style="width: 100%; margin-bottom: 0.5rem; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 6px; padding: 0.5rem; box-sizing: border-box;" />
+        <textarea id="todo-desc-input" placeholder="Task Description" style="width: 100%; height: 60px; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 6px; padding: 0.5rem; box-sizing: border-box;"></textarea>
+        
+        <select id="todo-status-input" style="width: 100%; margin-top: 0.5rem; background: #0f172a; color: white; border: 1px solid #334155; border-radius: 6px; padding: 0.5rem; box-sizing: border-box;">
+          <option value="todo">To-Do</option>
+          <option value="progress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+        
+        <button id="submit-todo-btn" class="btn" style="margin-top: 0.5rem; cursor: pointer;">Add Task!</button>
+      </div>
+
+      <!-- Container untuk To-Do List (Diisi lewat JavaScript) -->
+      <div id="todo-container" class="feed-container">
+        <p style="text-align: center;">Loading to-do list...</p>
       </div>
     </section>
 

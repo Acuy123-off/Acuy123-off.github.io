@@ -207,3 +207,56 @@ h1 {
   border: 1px solid var(--border);
   margin-top: 0.5rem;
 }
+
+
+/*To-Do List Styles */
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.todo-content {
+  flex-grow: 1;
+}
+
+.todo-title {
+  color: var(--heading);
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.todo-content p {
+  color: var(--text);
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* Base style untuk label status */
+.status-label {
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Warna untuk masing-masing label */
+.status-todo {
+  background-color: var(--border); /* Warna abu-abu kebiruan */
+  color: var(--heading);
+}
+
+.status-progress {
+  background-color: #d97706; /* Warna oranye / amber */
+  color: #ffffff;
+}
+
+.status-done {
+  background-color: var(--accent); /* Warna hijau lime sesuai tema (limegreen) */
+  color: #0f172a; /* Warna background gelap agar teks terbaca */
+}
